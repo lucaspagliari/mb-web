@@ -1,25 +1,26 @@
 @import "./reset.scss";
+@import "./mixins.scss";
 
 $black: #000000;
 $white: #ffffff;
 $primary: #ff9900;
 
 :root {
-  --color-black: $black;
-  --color-white: $white;
-  --color-primary: $primary;
+  --color-black: #{$black};
+  --color-white: #{$white};
+  --color-primary: #{$primary};
 }
 
 body {
   min-height: 100vh;
   color: $black;
   background-color: $white;
-  font-family: Inter;
+  font-family: "Inter";
 }
 
 #app {
   max-width: 1280px;
   margin: 0 auto;
   padding: 2rem;
-  font-weight: normal;
+  font-weight: 500;
 }
