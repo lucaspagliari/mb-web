@@ -10,13 +10,14 @@ const props = defineProps({
   outlined: Boolean
 })
 </script>
-<style lang="scss">
+<style scoped lang="scss">
 .v-button {
   display: flex;
   align-items: center;
   justify-content: center;
   min-width: fit-content;
-
+  width: 100%;
+  font-size: 16px;
   padding: 0.625rem 1rem;
   cursor: pointer;
   border-radius: 0.5rem;
