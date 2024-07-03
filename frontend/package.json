@@ -15,6 +15,7 @@
   },
   "dependencies": {
     "@vueuse/core": "^10.11.0",
+    "cpf-cnpj-validator": "^1.0.3",
     "sass": "^1.77.6",
     "vue": "^3.4.29"
   },
