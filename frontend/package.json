@@ -14,10 +14,12 @@
     "format": "prettier --write src/"
   },
   "dependencies": {
+    "@vueuse/core": "^10.11.0",
     "sass": "^1.77.6",
     "vue": "^3.4.29"
   },
   "devDependencies": {
+    "@faker-js/faker": "^8.4.1",
     "@rushstack/eslint-patch": "^1.8.0",
     "@vitejs/plugin-vue": "^5.0.5",
     "@vue/eslint-config-prettier": "^9.0.0",

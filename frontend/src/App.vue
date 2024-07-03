@@ -9,7 +9,4 @@ import RegistrationView from "./views/RegistrationView.vue"
 </template>
 
 <style scoped>
-main {
-  font-size: xx-large;
-}
 </style>
