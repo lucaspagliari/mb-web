@@ -1,17 +1,24 @@
 <template>
   <div class="v-radio-group">
-    <b-radio v-for="{ label } in items" :key="label" :name="name">{{ label }}</b-radio>
+    <b-radio
+      v-for="item in items"
+      :key="item.label"
+      :name="name"
+      :label="item.label"
+      :value="item.value"
+    ></b-radio>
   </div>
 </template>
 
 <script setup>
+import { getUid } from '@/utils/uuid'
+
 const props = defineProps({
   items: {
     type: Array
   }
 })
 
-import { getUid } from '@/utils'
 
 const name = getUid()
 </script>
@@ -23,3 +30,4 @@ const name = getUid()
   margin: 12px 0;
 }
 </style>
+@/utils/utils

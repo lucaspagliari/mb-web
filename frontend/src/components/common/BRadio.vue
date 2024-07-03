@@ -1,14 +1,15 @@
 <template>
   <div class="b-radio">
-    <input class="b-radio__input" :id="id" :name="name" type="radio" />
+    <input class="b-radio__input" v-bind="inputAttr" />
     <label class="b-radio__label" :for="id">
-      <slot name="default"></slot>
+      {{ label }}
     </label>
   </div>
 </template>
 
 <script setup>
-import { getUid } from '@/utils'
+import { getUid } from '@/utils/uuid'
+import { computed } from 'vue'
 
 const props = defineProps({
   label: {
@@ -17,9 +18,20 @@ const props = defineProps({
   name: {
     type: String,
     default: getUid()
+  },
+  value: {
+    type: [String, Boolean, Number]
   }
 })
-const id =  getUid()
+
+const id = getUid()
+
+const inputAttr = computed(() => ({
+  name: props.name,
+  value: props.value,
+  id,
+  type: 'radio'
+}))
 </script>
 
 <style lang="scss" scoped>
@@ -40,3 +52,4 @@ const id =  getUid()
   }
 }
 </style>
+@/utils/utils
