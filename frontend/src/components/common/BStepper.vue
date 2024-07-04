@@ -15,7 +15,7 @@ defineProps({
 
 <style lang="scss" scoped>
 .b-stepper {
-  margin-bottom: 2rem;
+  margin-bottom: 1.5rem;
 
   &__current {
     display:inline-block;
