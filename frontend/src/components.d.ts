@@ -12,5 +12,9 @@ declare module 'vue' {
     BRadio: typeof import('./components/common/BRadio.vue')['default']
     BRadioGroup: typeof import('./components/common/BRadioGroup.vue')['default']
     BStepper: typeof import('./components/common/BStepper.vue')['default']
+    ClientEmailForm: typeof import('./components/ClientEmailForm.vue')['default']
+    ClientInformationForm: typeof import('./components/ClientInformationForm.vue')['default']
+    ClientPasswordForm: typeof import('./components/ClientPasswordForm.vue')['default']
+    ClientReviewForm: typeof import('./components/ClientReviewForm.vue')['default']
   }
 }

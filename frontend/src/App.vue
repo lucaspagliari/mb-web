@@ -1,12 +1,9 @@
 <script setup>
-import RegistrationView from "./views/RegistrationView.vue"
+import RegistrationView from './views/RegistrationView.vue'
 </script>
 
 <template>
-  <main>
-    <RegistrationView />
-  </main>
+  <RegistrationView />
 </template>
 
-<style scoped>
-</style>
+<style lang="scss"></style>
