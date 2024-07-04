@@ -5,11 +5,13 @@
   "type": "module",
   "main": "main.js",
   "scripts": {
-    "start": "node --watch main.js "
+    "dev": "node main.js ",
+    "dev:watch": "node --watch main.js "
   },
   "author": "Lucas Pagliari",
   "license": "ISC",
   "dependencies": {
+    "cors": "^2.8.5",
     "express": "^4.19.2"
   }
 }
