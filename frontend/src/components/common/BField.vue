@@ -1,14 +1,19 @@
 <template>
   <div class="b-field">
     <label class="b-field__label"> {{ label }}</label>
-    <input v-model="text" class="b-field__input" :type="type" />
-    <p class="b-field__message">{{ message }}</p>
-
+    <input v-model="model" class="b-field__input" :type="type" :disabled="disabled" />
+    <p class="b-field__message">{{ errorMessage }}</p>
   </div>
 </template>
 
 <script setup>
-import { watch, ref } from 'vue'
+import { useValidate } from '@/composables/useValidate'
+import { useDebounceFn } from '@vueuse/core'
+import { watch, onMounted } from 'vue'
+
+const emits = defineEmits(['update:isValid'])
+
+const model = defineModel()
 
 const props = defineProps({
   type: {
@@ -18,33 +23,24 @@ const props = defineProps({
   label: {
     type: String
   },
+  disabled: {
+    type: Boolean
+  },
   rules: {
     type: Array,
-    default: [(v) => !!v || 'Campo necessário']
+    default: []
   }
 })
+onMounted(() => emits('update:isValid', false))
 
-const text = ref()
-const message = ref()
-
-watch(text, () => console.log(text.value))
-
-function validate() {
-  const { rules } = props
-  for (let i = 0; i < rules.length; i++) {
-    const fun = rules[0]
-    const result = fun(text.value)
-
-    if (typeof result === 'string') {
-      message.value = result
-      break
-    }
-  }
-}
-
-defineExpose({
-  validate: validate
+const { validate, errorMessage } = useValidate({
+  onSuccess: () => emits('update:isValid', true),
+  onError: () => emits('update:isValid', false)
 })
+
+const validateDebounced = useDebounceFn(() => validate(model.value, props.rules), 250)
+
+watch(model, validateDebounced)
 </script>
 
 <style lang="scss" scoped>
@@ -62,13 +58,20 @@ defineExpose({
     font-size: 0.875rem;
     padding: 2px 8px;
     font-weight: 500;
+
+    &:disabled {
+      color: $gray;
+      border-color: $gray;
+    }
   }
   &__message {
-    color: $gray;
-    height: 20px;
+    color: $red;
+    height: 16px;
     display: inline-block;
     padding: 4px 0;
     font-size: 0.75rem;
   }
+
+
 }
 </style>
