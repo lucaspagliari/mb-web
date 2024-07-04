@@ -1,7 +1,7 @@
 <template>
   <div class="b-radio">
-    <input class="b-radio__input" v-bind="inputAttr" />
-    <label class="b-radio__label" :for="id">
+    <input v-model="model" class="b-radio__input" v-bind="inputAttr" />
+    <label class="b-radio__label" :for="id" checked>
       {{ label }}
     </label>
   </div>
@@ -23,6 +23,7 @@ const props = defineProps({
     type: [String, Boolean, Number]
   }
 })
+const model = defineModel()
 
 const id = getUid()
 
