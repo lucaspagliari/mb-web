@@ -1,5 +1,9 @@
 <template>
-  <button :class="{ 'v-button': true, 'v-button__outlined': outlined }">
+  <button
+    :class="{ 'b-btn': true, 'b-btn__outlined': outlined, 'b-btn__disabled': disabled }"
+    :disabled="disabled"
+    @click.prevent="handleClick"
+  >
     <slot name="default"></slot>
   </button>
 </template>
@@ -7,11 +11,20 @@
 <script setup>
 const props = defineProps({
   color: String,
-  outlined: Boolean
+  outlined: Boolean,
+  disabled: Boolean
 })
+
+const emits = defineEmits(['click'])
+
+function handleClick() {
+  if (props.disabled) return
+  emits('click')
+}
+
 </script>
 <style scoped lang="scss">
-.v-button {
+.b-btn {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -36,6 +49,11 @@ const props = defineProps({
     background-color: $white;
     color: $primary;
     @include hoverEffect($white);
+  }
+
+  &__disabled {
+    opacity: .7;
+    cursor: not-allowed;
   }
 }
 </style>
