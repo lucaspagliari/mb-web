@@ -38,9 +38,7 @@ const { validate, errorMessage } = useValidate({
   onError: () => emits('update:isValid', false)
 })
 
-const validateDebounced = useDebounceFn(() => validate(model.value, props.rules), 250)
-
-watch(model, validateDebounced)
+watch(model, () => validate(model.value, props.rules))
 </script>
 
 <style lang="scss" scoped>

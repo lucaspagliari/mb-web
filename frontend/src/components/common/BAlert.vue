@@ -1,6 +1,8 @@
 <template>
   <div class="b-alert">
-    <p class="b-alert__title">Alerta</p>
+    <p class="b-alert__title">
+      <slot name="default"></slot>
+    </p>
     <ul class="b-alert__content">
       <li
         v-for="(message, i) in messages"
@@ -13,7 +15,6 @@
   </div>
 </template>
 <script setup>
-
 const props = defineProps({
   messages: Array
 })

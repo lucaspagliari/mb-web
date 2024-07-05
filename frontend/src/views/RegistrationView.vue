@@ -1,7 +1,7 @@
 <template>
   <div class="registration-view">
     <template v-if="!isCurrent('client-confirm')">
-      <b-stepper :index="index">{{ current.title }}</b-stepper>
+      <b-stepper :index="index" :max-index="4">{{ current.title }}</b-stepper>
 
       <ClientEmailForm v-show="isCurrent('client-email')" />
       <ClientInformationForm v-show="isCurrent('client-information')" />
@@ -25,7 +25,7 @@
           Cadastrar
         </b-btn>
       </div>
-      <b-alert v-if="state.hasError" :messages="state.messages"></b-alert>
+      <b-alert v-if="state.hasError" :messages="state.messages">Formulário contém os erros:</b-alert>
     </template>
     <template v-else>
       <div class="registration-view__completed">
@@ -73,7 +73,7 @@ const registerSteps = computed(() => ({
   }
 }))
 
-const { index, goToNext, goToPrevious, isFirst, current, isCurrent, goTo } =
+const { index, goToNext, goToPrevious, isFirst, current, isCurrent, goTo,  } =
   useStepper(registerSteps)
 
 const { state, run } = useAsync(clientService.create)

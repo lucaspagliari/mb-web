@@ -1,7 +1,7 @@
 <template>
   <div class="b-stepper">
     <p>
-      Etapa <span class="b-stepper__current">{{ index + 1 }}</span> de 4
+      Etapa <span class="b-stepper__current">{{ index + 1 }}</span> de {{ maxIndex }}
     </p>
     <h2><slot name="default"></slot></h2>
   </div>
@@ -9,7 +9,8 @@
 
 <script setup>
 defineProps({
-  index: Number
+  index: Number,
+  maxIndex : Number
 })
 </script>
 

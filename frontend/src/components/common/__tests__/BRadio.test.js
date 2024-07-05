@@ -8,7 +8,7 @@ const radioFactory = (props, options) => mount(BRadio, { props, ...options })
 describe("Component BRadio", () => {
     it("should render text passed in slot", () => {
         const text = faker.string.alphanumeric(16);
-        const radio = radioFactory({}, { slots: { default: text } })
+        const radio = radioFactory({ label: text })
 
         expect(radio.text()).toBe(text)
     });
