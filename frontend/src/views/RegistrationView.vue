@@ -2,83 +2,110 @@
 import { useStepper } from '@vueuse/core'
 import { reactive, provide, computed } from 'vue'
 import { clientService } from '@/services/clientService'
-const form = reactive({
+import { useAsync } from '@/composables/useAsync'
 
-})
-const formValid = reactive({
-  clientEmail: false,
-  clientInformation: false,
-  clientPassword: false
+const form = reactive({
+  // email: 'lucas.alexpagliari@gmail.com',
+  // isCompany: false,
+  // name: 'LUCAS ALEXANDRE PAGLIARI',
+  // document: '41700757814',
+  // date: '2024-07-03',
+  // phone: '11972271999',
+  // password: 'minhasenha'
 })
 
 provide('form', form)
 
 const registerSteps = computed(() => ({
   'client-email': {
-    title: 'Seja bem vindo(a)',
-    disabledBtn: !formValid.clientEmail
+    title: 'Seja bem vindo(a)'
   },
   'client-information': {
-    title: form.isCompany ? 'Pessoa Jurídica' : 'Pessoa Física',
-    disabledBtn: !formValid.clientInformation
+    title: form.isCompany ? 'Pessoa Jurídica' : 'Pessoa Física'
   },
   'client-password': {
-    title: 'Senha de acesso',
-    disabledBtn: !formValid.clientPassword
+    title: 'Senha de acesso'
   },
   'client-review': {
-    title: 'Revise suas informações',
-    disabledBtn: false
+    title: 'Revise suas informações'
+  },
+  'client-confirm': {
+    title: 'Cliente Cadastrado'
   }
 }))
 
-const { index, goToNext, goToPrevious, isFirst, isLast, current, isCurrent } =
+const { index, goToNext, goToPrevious, isFirst, current, isCurrent, goTo } =
   useStepper(registerSteps)
 
+const { state, run } = useAsync(clientService.create)
+
 async function registerClient() {
-  const [data, error] = await clientService.create(form)
-
-  if (data) {
-    console.log('cliente cadastrado com sucesso')
-  }
-
-  if (error) {
-    console.log('cliente não foi cadastrado')
+  await run(form)
+  if (!state.hasError) {
+    goToNext()
   }
 }
 </script>
 
 <template>
   <div class="registration-view">
-    <b-stepper :index="index">{{ current.title }}</b-stepper>
-    <ClientEmailForm v-model="formValid.clientEmail" v-show="isCurrent('client-email')" />
+    <template v-if="!isCurrent('client-confirm')">
+      <b-stepper :index="index">{{ current.title }}</b-stepper>
 
-    <ClientInformationForm
-      v-model="formValid.clientInformation"
-      v-show="isCurrent('client-information')"
-    />
+      <ClientEmailForm v-show="isCurrent('client-email')" />
+      <ClientInformationForm v-show="isCurrent('client-information')" />
+      <ClientPasswordForm v-show="isCurrent('client-password')" />
+      <ClientReviewForm v-show="isCurrent('client-review')" />
 
-    <ClientPasswordForm v-model="formValid.clientPassword" v-show="isCurrent('client-password')" />
-
-    <ClientReviewForm v-show="isCurrent('client-review')" />
-    <div v-show="isCurrent('client-confirm')">cliente salvo</div>
-
-    <div class="registration-view__actions">
-      <b-btn v-if="!isFirst" outlined @click="goToPrevious">Voltar</b-btn>
-      <b-btn v-if="!isLast" @click="goToNext" :disabled="current.disabledBtn">Continuar</b-btn>
-      <b-btn v-if="isLast" @click="registerClient">Cadastrar</b-btn>
-    </div>
+      <div class="registration-view__actions">
+        <b-btn v-if="!isFirst" outlined @click="goToPrevious">Voltar</b-btn>
+        <b-btn
+          v-if="!isCurrent('client-review')"
+          @click="goToNext"
+          :disabled="current.disabledBtn"
+        >
+          Continuar
+        </b-btn>
+        <b-btn
+          v-if="isCurrent('client-review')"
+          :loading="state.loading"
+          @click="registerClient"
+        >
+          Cadastrar
+        </b-btn>
+      </div>
+      <b-alert v-if="state.hasError" :messages="state.messages"></b-alert>
+    </template>
+    <template v-else>
+      <div class="registration-view__completed">
+        <h2>Cadastro concluído</h2>
+        <img class="registration-view__check" src="@/assets/check.svg" alt="check icon" />
+        <b-btn @click="goTo('client-email')" width="20px"> Início </b-btn>
+      </div>
+    </template>
   </div>
 </template>
 
 <style lang="scss" scoped>
 .registration-view {
   margin: auto;
-  max-width: 300px;
+  max-width: 350px;
 
   &__actions {
     display: flex;
     gap: 16px;
+  }
+
+  &__completed {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 24px;
+  }
+
+  &__check {
+    width: 50px;
+    height: 50px;
   }
 }
 </style>
