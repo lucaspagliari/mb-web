@@ -5,13 +5,20 @@
   "type": "module",
   "main": "main.js",
   "scripts": {
-    "dev": "node main.js ",
-    "dev:watch": "node --watch main.js "
+    "start": "node ./src/main.js ",
+    "dev": "nodemon ./src/main.js "
   },
   "author": "Lucas Pagliari",
   "license": "ISC",
   "dependencies": {
     "cors": "^2.8.5",
-    "express": "^4.19.2"
+    "cpf-cnpj-validator": "^1.0.3",
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "joi": "^17.13.3",
+    "phone": "^3.1.46"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.4"
   }
 }
