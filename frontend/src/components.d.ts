@@ -7,6 +7,7 @@ export {}
 /* prettier-ignore */
 declare module 'vue' {
   export interface GlobalComponents {
+    BAlert: typeof import('./components/common/BAlert.vue')['default']
     BBtn: typeof import('./components/common/BBtn.vue')['default']
     BField: typeof import('./components/common/BField.vue')['default']
     BRadio: typeof import('./components/common/BRadio.vue')['default']
