@@ -1,3 +1,42 @@
+<template>
+  <div class="registration-view">
+    <template v-if="!isCurrent('client-confirm')">
+      <b-stepper :index="index">{{ current.title }}</b-stepper>
+
+      <ClientEmailForm v-show="isCurrent('client-email')" />
+      <ClientInformationForm v-show="isCurrent('client-information')" />
+      <ClientPasswordForm v-show="isCurrent('client-password')" />
+      <ClientReviewForm v-show="isCurrent('client-review')" />
+
+      <div class="registration-view__actions">
+        <b-btn v-if="!isFirst" outlined @click="goToPrevious">Voltar</b-btn>
+        <b-btn
+          v-if="!isCurrent('client-review')"
+          @click="goToNext"
+          :disabled="current.disabledBtn"
+        >
+          Continuar
+        </b-btn>
+        <b-btn
+          v-if="isCurrent('client-review')"
+          :loading="state.loading"
+          @click="registerClient"
+        >
+          Cadastrar
+        </b-btn>
+      </div>
+      <b-alert v-if="state.hasError" :messages="state.messages"></b-alert>
+    </template>
+    <template v-else>
+      <div class="registration-view__completed">
+        <h2>Cadastro concluído</h2>
+        <img class="registration-view__check" src="@/assets/check.svg" alt="check icon" />
+        <b-btn @click="goTo('client-email')" width="20px"> Início </b-btn>
+      </div>
+    </template>
+  </div>
+</template>
+
 <script setup>
 import { useStepper } from '@vueuse/core'
 import { reactive, provide, computed } from 'vue'
@@ -46,45 +85,6 @@ async function registerClient() {
   }
 }
 </script>
-
-<template>
-  <div class="registration-view">
-    <template v-if="!isCurrent('client-confirm')">
-      <b-stepper :index="index">{{ current.title }}</b-stepper>
-
-      <ClientEmailForm v-show="isCurrent('client-email')" />
-      <ClientInformationForm v-show="isCurrent('client-information')" />
-      <ClientPasswordForm v-show="isCurrent('client-password')" />
-      <ClientReviewForm v-show="isCurrent('client-review')" />
-
-      <div class="registration-view__actions">
-        <b-btn v-if="!isFirst" outlined @click="goToPrevious">Voltar</b-btn>
-        <b-btn
-          v-if="!isCurrent('client-review')"
-          @click="goToNext"
-          :disabled="current.disabledBtn"
-        >
-          Continuar
-        </b-btn>
-        <b-btn
-          v-if="isCurrent('client-review')"
-          :loading="state.loading"
-          @click="registerClient"
-        >
-          Cadastrar
-        </b-btn>
-      </div>
-      <b-alert v-if="state.hasError" :messages="state.messages"></b-alert>
-    </template>
-    <template v-else>
-      <div class="registration-view__completed">
-        <h2>Cadastro concluído</h2>
-        <img class="registration-view__check" src="@/assets/check.svg" alt="check icon" />
-        <b-btn @click="goTo('client-email')" width="20px"> Início </b-btn>
-      </div>
-    </template>
-  </div>
-</template>
 
 <style lang="scss" scoped>
 .registration-view {
