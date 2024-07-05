@@ -1,6 +1,7 @@
 <template>
   <button
-    :class="{ 'b-btn': true, 'b-btn__outlined': outlined, 'b-btn__disabled': disabled }"
+    :class="btnClasses"
+    :style="btnStyles"
     :disabled="disabled"
     @click.prevent="handleClick"
   >
@@ -9,19 +10,30 @@
 </template>
 
 <script setup>
+import { computed } from 'vue'
+
 const props = defineProps({
   color: String,
   outlined: Boolean,
-  disabled: Boolean
+  disabled: Boolean,
+  width: String
 })
 
+const btnClasses = computed(() => ({
+  'b-btn': true,
+  'b-btn__outlined': props.outlined,
+  'b-btn__disabled': props.disabled
+}))
+
+const btnStyles = computed(() => ({
+  width: props.width
+}))
 const emits = defineEmits(['click'])
 
 function handleClick() {
   if (props.disabled) return
   emits('click')
 }
-
 </script>
 <style scoped lang="scss">
 .b-btn {
@@ -52,7 +64,7 @@ function handleClick() {
   }
 
   &__disabled {
-    opacity: .7;
+    opacity: 0.7;
     cursor: not-allowed;
   }
 }
