@@ -15,7 +15,7 @@
       v-model="form.date"
       v-model:is-valid="formValid.date"
       v-bind="dateField"
-      :rules="[required]"
+      :rules="[required, dateBeforeNow]"
     ></b-field>
     <b-field
       v-model="form.phone"
@@ -27,7 +27,7 @@
 </template>
 
 <script setup>
-import { isCnpj, isCpf, isPhoneNumber, required } from '@/utils/rules'
+import { dateBeforeNow, isCnpj, isCpf, isPhoneNumber, required } from '@/utils/rules'
 import { inject, computed, reactive, watch } from 'vue'
 
 const form = inject('form')
