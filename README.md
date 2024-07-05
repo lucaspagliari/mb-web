@@ -11,6 +11,13 @@ docker run -p 4000:4000 mb-web
 ```
 
 ## Executando individualmente
+Na pasta frontend
+```shell
+npm run install
+```
+```shell
+npm run build
+```
 
 Na pasta backend
 ```shell
@@ -18,14 +25,6 @@ npm run install
 ```
 ```shell
 npm run dev
-```
-
-Na pasta frontend
-```shell
-npm run install
-```
-```shell
-npm run build
 ```
 
 ## Rodando testes no frontend
@@ -43,6 +42,7 @@ npm run test
 - SASS
 - Express
 - Joi (Validador)
-- cpf-cnpj-validator,
-- phone (Validador),
+- cpf-cnpj-validator
+- phone (Validador)
+
 
